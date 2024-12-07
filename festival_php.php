@@ -61,9 +61,6 @@
         </li><!-- End Search Icon-->
 
         <li class="nav-item dropdown">
-
-          
-
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have 4 new notifications
@@ -323,7 +320,6 @@
                         $data[] = $row;
                     }
                 }
-
                 return $data;
             }
             
@@ -458,7 +454,7 @@ elseif (isset($_POST['add'])) {
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->
       <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="#">Aryan & Adi</a>
+      Designed by <a href="#">Aryan</a>
     </div>
   </footer><!-- End Footer -->
 

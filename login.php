@@ -15,14 +15,10 @@ if (isset($_POST['submit'])){
 
     if ($total==1 ){
         $_SESSION['user_name']= $username;
-        header('location:index.php');   //dashboard mainnn
+        header('location:index.php');
     }
     else{
         echo"Login failed";
-
     }
-
 }
-
-
 ?>

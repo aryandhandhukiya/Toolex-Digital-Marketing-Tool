@@ -61,7 +61,7 @@ session_start();
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
-                  <form action="http://localhost/Php Mini Project/Toolex/login.php" method="post" class="row g-3 needs-validation" novalidate>
+                  <form action="http://localhost/Toolex/login.php" method="post" class="row g-3 needs-validation" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
@@ -84,7 +84,7 @@ session_start();
 			
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                      <p class="small mb-0">Don't have account? <a href="http://localhost/Toolex/pages-register.php">Create an account</a></p>
                     </div>
                   </form>
 
@@ -93,7 +93,7 @@ session_start();
 
               <div class="credits">
                
-                Designed by <a href="#">Aryan & Aditya</a>
+                Designed by <a href="#">Aryan</a>
               </div>
 
             </div>

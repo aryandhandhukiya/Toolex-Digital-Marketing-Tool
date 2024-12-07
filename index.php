@@ -1,13 +1,10 @@
 <?php
-
 session_start();
 error_reporting(0); 
 $userprofile =$_SESSION['user_name'];
 
 include('connection.php');
-
 function send_mail($to_email, $subject, $body, $headers){
-
     $to_email= $to_email;
     $subject = $subject;
     $body= $body;
@@ -22,27 +19,17 @@ function send_mail($to_email, $subject, $body, $headers){
         catch (Exception $e) {
             echo "Exception: " . $e->getMessage();
         }
-
-
 }
 
-
 function detect_bday($conn){
-
     $conn= $conn;
     $today = date('m-d'); 
     echo"$today";
     $query = "SELECT * FROM customers WHERE DATE_FORMAT(birthday, '%m-%d') = '$today';";
     $bday = mysqli_query($conn, $query);
     
-
     if ($bday) {
-    
         while ($row = mysqli_fetch_assoc($bday)) {
-            
-            //echo $row['id'] . " ".$row['name'] . " ".$row['email_id'] . " ".$row['birthday'] . " ".$row['location'] . " ". " ".$row['points'] . " ";
-
-            // Fetching festival data here and loop through it
                 $headers = "Hey ".$row['name']." Have'nt purchase cake yet ??🥺🥺 No problem we have offers for you ";
                 if ($row['points'] >= 1000) {
                     $html_body = "Happy Birthday " . $row['name'] . "! We hope that your day is filled with joy and celebration. As a token of our appreciation, we would like to offer you a special birthday discount of 30% on your next purchase with us at our " . $row['location'] . " store. We value your loyalty as a customer and hope that you continue to choose our products and services for all of your needs. Thank you for being a part of our community.";
@@ -50,18 +37,13 @@ function detect_bday($conn){
                     $html_body = "Happy Birthday " . $row['name'] . "! We hope that your day is filled with joy and celebration. Make your birthday more joyful with us at our " . $row['location'] . " store. We value your loyalty as a customer and hope that you continue to choose our products and services for all of your needs. Thank you for being a part of our community.";
                 }
                 send_mail($row['email_id'], "Happy birthday ".$row['name']."🥳🥳", $html_body, $headers);
-        
         } 
     } 
-
 }
 
-
-
 function detect_fest($conn){
-
     $conn= $conn;
-    $today = date('Y-m-d'); // Get today's date in the format used in your database
+    $today = date('Y-m-d');
 
     $query = "SELECT * FROM festival WHERE fest_date = '$today';";
     $fest = mysqli_query($conn, $query);
@@ -73,7 +55,6 @@ function detect_fest($conn){
     if ($data) {
     
         while ($row = mysqli_fetch_assoc($data)) {
-            // Process and use $row here
             echo $row['id'] . " ".$row['name'] . " ".$row['email_id'] . " ".$row['birthday'] . " ".$row['location'] . " ". " ".$row['points'] . " ";
 
             while ($row_fest = mysqli_fetch_assoc($fest)) {
@@ -82,21 +63,15 @@ function detect_fest($conn){
                 $html_body = "Wishing you and your loved ones a joyous and prosperous ".$row_fest['fest_name']." ! May this festival bring happiness, good health, and abundance into your life. On this special occasion, I hope you get to spend quality time with your family and friends, enjoy delicious food, and create unforgettable memories. Make this festival more special with our special offers on our products.";
 
                 send_mail($row['email_id'], "testing " . $row_fest['fest_name'], $html_body, $headers);
-
             }
         } 
     } 
-    
+
     else {
         echo "Error: fff " . mysqli_error($conn);
     }
 }
-
 }
-
-
-// insert_authentication_data("adityahakani29@gmail.com", "Aditya", "Adi@123" );
-// detect_fest($conn)
 
 if($userprofile != true){
     header('location:pages-login.php');
@@ -106,10 +81,7 @@ else
   detect_fest($conn);
 detect_bday($conn);
 }
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -140,10 +112,7 @@ detect_bday($conn);
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-
 </head>
-
 <body>
 
   <!-- ======= Header ======= -->
@@ -173,79 +142,6 @@ detect_bday($conn);
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
-
-        <li class="nav-item dropdown">
-
-          
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
-
         <li class="nav-item dropdown">
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
