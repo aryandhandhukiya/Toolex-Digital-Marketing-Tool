@@ -1,9 +1,8 @@
 <?php
-session_start();
-error_reporting(0); 
-$userprofile =$_SESSION['user_name'];
+//$userprofile =$_SESSION['user_name'];
 
-include('connection.php');
+//include('connection.php');
+/*
 function send_mail($to_email, $subject, $body, $headers){
     $to_email= $to_email;
     $subject = $subject;
@@ -81,6 +80,64 @@ else
   detect_fest($conn);
 detect_bday($conn);
 }
+*/
+$host = "localhost";
+$dbname = "php_project";
+$username = "root";
+$password = "";
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
+
+$query = "SELECT email_id, name FROM customers";
+$stmt = $pdo->query($query);
+$customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+
+if (isset($_POST['send'])) { // Check if the send button was clicked
+    $mail = new PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';  // Use Gmail's SMTP server
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'dhandhukiyaaryan05@gmail.com'; // Gmail address
+        $mail->Password   = 'vfms lmfb uhxh fdfx';          // App Password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;    // Secure encryption
+        $mail->Port       = 465;
+
+        // Iterate through customers and send email
+        foreach ($customers as $customer) {
+            $mail->clearAddresses(); // Clear recipients for each email
+            $mail->setFrom('dhandhukiyaaryan05@gmail.com', 'Aryan Dhandhukiya');
+            $mail->addAddress($customer['email_id'], $customer['name']);
+            
+            // Email content
+            $mail->isHTML(true);
+            $mail->Subject = 'Personalized Subject';
+            $mail->Body    = "<h1>Hello {$customer['name']}</h1><p>This is a personalized email!</p>";
+            $mail->AltBody = "Hello {$customer['name']}, This is a personalized email!";
+
+            $mail->send();
+            echo "Email sent to {$customer['name']} ({$customer['email_id']})<br>";
+        }
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -312,7 +369,9 @@ detect_bday($conn);
                   <span>date:2021-08-05</span>
 
                   <br/><br/>
-                  <button type="submit" name="update" class="btn btn-primary">Send Mail</button>
+                  <form method="post" action="index.php">
+                  <button type="submit" name="send" class="btn btn-primary">Send Mail</button>
+</form>
                 </div>
 
               </div>
